@@ -1,0 +1,38 @@
+{% extends 'basetheam.html' %}
+
+
+{%block content%}
+<!-- customized event page with css-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{event.image.url}}" class="img-fluid" >
+        </div>
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h2 class="card-title">{{event.name}}</h2>
+                <p class="card-text">{{event.description}}</p>
+                <p class="card-text">Event Date: {{event.date}}</p>
+                <p class="card-text">Event Time: {{event.time}}</p>
+                <p class="card-text">Location: {{event.location}}</p>
+                <p class="card-text">Capacity: {{event.capacity}}</p>
+                <p class="card-text">Price: {{event.price}}</p>
+                
+
+            </div>
+            <div class="col-md-12">
+                <div class="card card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Buy Ticket</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <!-- Buy a ticket for an event  -->
+        
+    </div>
+</div>
+
+{%endblock%}

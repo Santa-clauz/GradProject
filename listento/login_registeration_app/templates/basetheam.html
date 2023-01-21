@@ -48,9 +48,11 @@
             <a class="nav-link" href="/artists">Artists</a>
             </li>
             <li class="nav-item">
-            
-            <a class="nav-link" href="/artistprofile/{{request.session.user.id}}">Profile</a>
-            
+            {% if request.session.user.role == "artis" %}
+            <a class="nav-link" href="/artistprofile/{{request.session.user.id}}">Profile {{request.session.user.role.id}}</a>
+            {% else %}
+            <a class="nav-link" href="/userprofile/{{request.session.user.id}}">Profile</a>
+            {% endif %}
             </li>
             <li class="nav-item">
             <form id="search" method="POST" action="/anothersearch">

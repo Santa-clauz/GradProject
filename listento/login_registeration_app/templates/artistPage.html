@@ -505,6 +505,12 @@ footer p a:hover {
                                     Upload Song
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#events" role="tab" data-toggle="tab">
+                                <i class="material-icons">palette</i>
+                                    Upload Event
+                                </a>
+                            </li>
                             {%endif%}
                         </li>
                         
@@ -536,11 +542,20 @@ footer p a:hover {
   				<div class="row">
                     <div class="form-group">
                         <ul class="list-group list-group-flush" name="top10">
+                            
                             <li class="list-group-item" >Artist Release</li>
                             {%for i in allmusic%}
                             <li class="list-group-item"><a href="/songpage/{{i.id}}">{{i.song_name}}</a> 
                                 {% if request.session.user.id == x.id %}
                                 <form action="/delete/{{i.id}}" method="POST">{% csrf_token %}<input type="submit" value="Delete" class="btn btn-danger"> </form>
+                                {% endif %}
+                            </li>
+                            {%endfor%}
+                            <li class="list-group-item" >Artist Events</li>
+                            {%for i in events%}
+                            <li class="list-group-item"><a href="/event/{{i.id}}">{{i.name}}</a> 
+                                {% if request.session.user.id == x.id %}
+                                <form action="/event/{{i.id}}/delete" method="POST">{% csrf_token %}<input type="submit" value="Delete" class="btn btn-danger"> </form>
                                 {% endif %}
                              </li>
                             
@@ -567,6 +582,42 @@ footer p a:hover {
                         </div>
       			</div>
   			</div>
+              <div class="tab-pane text-center gallery" id="events">
+                <div class="row">
+                  <div class="form-group">
+                    <form action="/create-event" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="title">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Date:</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time:</label>
+                            <input type="time" class="form-control" id="time" name="time">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price">
+                        </div>
+
+                        <!-- div for inserting image -->
+                        <span class="btn btn-primary btn-file">
+                            <input type="file" name="image">
+                        </span>
+                        
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                      </div>
+                </div>
+            </div>
             
           </div>
 

@@ -9,7 +9,7 @@ urlpatterns = [
         path('register',views.register),
         path('logins',views.logins),
         path('artists', views.artists),
-        path('userprofile', views.userprofile),
+        path('userprofile/<int:id>', views.userprofile),
         path('artistprofile/<int:id>', views.artistprofile),
         path('songpage/<int:id>',views.songpage),
         path('adduser',views.adduser),
@@ -34,7 +34,15 @@ urlpatterns = [
         path('top10',views.top10),
         path('rate/<int:id>', views.rate_image),
         path('search/<str>', views.autocomplete),
-        path('anothersearch',views.lol)
+        path('anothersearch',views.lol),
+        path('create-event',views.create_event),
+        path('event/<int:id>',views.event_page),
+        # path('event/<int:id>/join',views.joinEvent);
+        # path('event/<int:id>/leave',views.leaveEvent);
+        path('event/<int:id>/delete',views.deleteEvent),
+        # path('event/<int:id>/edit',views.editEvent);
+        # path('event/<int:id>/update',views.updateEvent);
+        # path('rateEvent/<int:id>',views.rateEvent);
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

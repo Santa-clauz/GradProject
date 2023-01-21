@@ -73,10 +73,20 @@
 
     }
 </style>
-
+<!-- song_name=models.CharField(max_length=45)
+    writer=models.CharField(max_length=45)
+    composer = models.CharField(max_length=45)
+    duration = models.CharField(max_length=45)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    lyrics=models.TextField()
+    music = models.FileField(upload_to='audio/', blank=True)
+    uploaded_by=models.ForeignKey(User,related_name="songs",on_delete=models.CASCADE) -->
 <div class="card">
-    <h1>Melhem Barakat </h1>
-    <p>Production Date: 12 Years Ago</p>
+    <h1>{{i.song_name}}</h1>
+    <p>Composer : {{i.composer}} </p>
+    <p>duration : {{i.duration}} minutes</p>
+    
    
     <h1>{{i.song_name}}</h1>   
     <audio controls>

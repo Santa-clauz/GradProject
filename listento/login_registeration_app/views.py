@@ -1,7 +1,7 @@
 from django.http import request
-from music_app.models import Music, Rate
+from music_app.models import Music, Rate , Event
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
 from login_registeration_app.models import *
 from django.contrib import messages
 from django.db.models import Count
@@ -95,8 +95,8 @@ def artists(request):
     }
     return render(request,'artistspage.html', context)
 
-def userprofile(req):
-    user = User.objects.get(id=req.session['user']['id'])
+def userprofile(req,id):
+    user = User.objects.get(id=id)
     allmusic = Music.objects.filter(uploaded_by=user)
     followings=user.userfollowings.all()
     ratings=user.rates.all()
@@ -112,7 +112,7 @@ def userprofile(req):
         'followings':followings,
         'ratings':ratings
     }
-    if user.role == Role.objects.get(id=2):
+    if user.role.id == 2:
         return render(req,'userprofile.html',context)
     return render(req,'artistpage.html',context)
 def artistprofile(req,id):
@@ -121,12 +121,14 @@ def artistprofile(req,id):
     user = User.objects.get(id=id)
     me = User.objects.get(id = req.session['user']['id'])
     allmusic = Music.objects.filter(uploaded_by=user)
+    events = Event.objects.filter(creator=user)
     g=0
     for i in user.userfollowers.all():
         if me.id == i.followinguser.id :
             g=g+1
     context = {
         'x': user,
+        'events':events,
         'allmusic':allmusic,
         'me':me,
         'g':g,
@@ -134,6 +136,7 @@ def artistprofile(req,id):
         
     }
     return render(req,'artistPage.html',context)
+
 def addmusic(req,id):
     user = User.objects.get(id = id)
     song_title = req.POST['songtitle']
@@ -154,7 +157,10 @@ def songpage(req,id):
     for i in z.rates.all():
         sum1=sum1+i.score
         sum2=sum2+1
-    rate=int(sum1/sum2)
+    if sum2 != 0:
+        rate=int(sum1/sum2)
+    else:
+        rate = 1
     num=rate
     if rate == 1:
         rate="first"
@@ -185,7 +191,7 @@ def delete(req,id):
 def requesttobeartist(req):
     user = User.objects.get(id = req.session['user']['id'])
     LOL.objects.create(user=user,bool=True)
-    return redirect('/userprofile')
+    return redirect('/userprofile/'+str(req.session['user']['id']))
     
 
 def admin(req):
@@ -376,3 +382,63 @@ def rate_image(request,id):
     if 'fifth' in request.POST:
         Rate.objects.create(music=music,user=user,score=5)
     return redirect('/songpage/'+str(id))
+
+"""
+        path('createEvent',views.createEvent);
+        path('event/<int:id>',views.event);
+        path('event/<int:id>/join',views.joinEvent);
+        path('event/<int:id>/leave',views.leaveEvent);
+        path('event/<int:id>/delete',views.deleteEvent);
+        path('event/<int:id>/edit',views.editEvent);
+        path('event/<int:id>/update',views.updateEvent);
+        path('rateEvent/<int:id>',views.rateEvent);
+"""
+def createEvent_render(request):
+    if request.session['user']['role'] != 'artist':
+        return redirect('/home')
+    context={
+        'user':User.objects.get(id=request.session['user']['id'])
+    }
+    return render(request,'createEvent.html',context)
+def createEvent(request):
+    if request.session['user']['role'] != 'artist':
+        return redirect('/home')
+    return render(request,'createEvent.html')
+def event_render(request,id):
+    context={
+        'event':Event.objects.get(id=id),
+        'user':User.objects.get(id=request.session['user']['id'])
+    }
+    return render(request,'event.html',context)
+def create_event(request):
+    if request.session['user']['role'] != 'artis':
+        return redirect('/home')
+    id = request.session['user']['id']
+    user=User.objects.get(id=request.session['user']['id'])
+    img =request.FILES['image']
+    print(img)
+    Event.objects.create(name=request.POST['name'],
+    description=request.POST['date'],date=request.POST['date'],
+    time=request.POST['time'],location=request.POST['location'],
+    price=request.POST['price'],creator=user,image=img )
+    return redirect('/artistprofile/'+str(id))
+def deleteEvent(request,id):
+    if request.session['user']['role'] != 'artist':
+        return redirect('/home')
+    event=Event.objects.get(id=id)
+    event.delete()
+    return redirect('/artistprofile/'+str(request.session['user']['id']))
+def event_page(request,id):
+    context={
+        'event':Event.objects.get(id=id),
+        'user':User.objects.get(id=request.session['user']['id'])
+    }
+    return render(request,'event.html',context)
+
+# def joinEvent(request,id):
+#     #buy ticket for event 
+# name=models.CharField(max_length=45)
+# date=models.DateField()
+# time=models.TimeField()
+# location=models.CharField(max_length=45)
+# creator=models.ForeignKey(User,related_name="events",on_delete=models.CASCADE)

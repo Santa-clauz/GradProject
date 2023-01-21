@@ -26,3 +26,39 @@ class Rate(models.Model):
     )
 
 
+class Event(models.Model):
+    name=models.CharField(max_length=45)
+    date=models.DateField()
+    time=models.TimeField()
+    image = models.ImageField(upload_to='images/',default='pic.png')
+    location=models.CharField(max_length=45)
+    creator=models.ForeignKey(User,related_name="events",on_delete=models.CASCADE)
+    description=models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    attendees=models.ManyToManyField(User,related_name="attending")
+    price=models.IntegerField()
+
+    
+
+class Ticket(models.Model):
+    event=models.ForeignKey(Event,related_name="tickets",on_delete=models.CASCADE)
+    user=models.ForeignKey(User,related_name="tickets",on_delete=models.CASCADE)
+    price=models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Album(models.Model):
+    name=models.CharField(max_length=45)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='images/',default='pic.png')
+    songs=models.ManyToManyField(Music,related_name="albums")
+    uploaded_by=models.ForeignKey(User,related_name="albums",on_delete=models.CASCADE)
+
+class PlayList(models.Model):
+    name=models.CharField(max_length=45)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    songs=models.ManyToManyField(Music,related_name="playlists")
+    uploaded_by=models.ForeignKey(User,related_name="playlists",on_delete=models.CASCADE)
