@@ -3,9 +3,8 @@ from web.models import *
 from django.shortcuts import render, redirect
 import bcrypt
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
+def landing_page(request):
+    return render(request, 'landing_page.html')
 def login(req):
     redirect('/login')
     req.session.clear()
