@@ -1,9 +1,9 @@
 from django.http import HttpResponse
-from web.models import *
+from models import *
 from django.shortcuts import render, redirect
 import bcrypt
 
-def index(request):
+def index(req):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 def login(req):
@@ -34,7 +34,3 @@ def register(req):
         first_name=req.POST['first_name'],
         
     )
-
-def test(req):
-    return render(req, 'test.html')
-

@@ -61,7 +61,7 @@ class Rate(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Platlist(models.Model):
+class Playlist(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -69,3 +69,12 @@ class Platlist(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     musics = models.ManyToManyField(Music, related_name='playlists')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='playlists')
+
+class Album(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    musics = models.ManyToManyField(Music, related_name='albums')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='albums')
