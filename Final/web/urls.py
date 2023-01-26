@@ -4,7 +4,13 @@ from . import views
 
 urlpatterns = [
     path('', views.landing_page, name='home'),
-    path('/test', views.test, name='index'),
+    path('category', views.category, name='category'),
+    path('blog', views.blog, name='blog'),
+    path('artist', views.artist, name='artist'),
+    path('playlist', views.playlist, name='playlist'),
+    path('contact', views.contact, name='contact'),
+    path('About', views.About, name='About'),
+    path('test', views.test, name='index'),
     # path('login', views.login, name='login'),
     # path('register', views.register, name='register'),
     # path('logout', views.logout, name='logout'),

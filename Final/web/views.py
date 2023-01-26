@@ -5,6 +5,26 @@ import bcrypt
 
 def landing_page(request):
     return render(request, 'landing_page.html')
+
+def category(request):
+    return render(request, 'category.html')
+
+def blog(request):
+    return render(request, 'blog.html')
+
+def artist(request):
+    return render(request, 'artist.html')
+
+def playlist(request):
+    return render(request, 'playlist.html')
+
+
+def About(request):
+    return render(request, 'About.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
 def login(req):
     redirect('/login')
     req.session.clear()
