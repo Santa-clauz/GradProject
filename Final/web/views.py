@@ -25,6 +25,15 @@ def About(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+def Login(request):
+    return render(request, 'Login.html')
+
+
+def registration(request):
+    return render(request, 'registration.html')
+
 def login(req):
     redirect('/login')
     req.session.clear()

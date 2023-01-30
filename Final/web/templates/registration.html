@@ -1,0 +1,61 @@
+{% include "header.html" %}
+<body>
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content" style="border-radius: 20px;
+            padding: 11px;
+            ">
+                <h3 style="color: #6c63ac;">Register</h3>
+                <form class="registration" method="post">
+                    {% csrf_token %}
+
+                    <div class="login__field">
+                        <input type="text" class="login__input" name="first_name" placeholder="First name">
+                    </div>
+                    <div class="login__field">
+                        <input type="text" class="login__input" name="last_name" placeholder="Last name">
+                    </div>                      
+
+                    <div class="login__field">
+                        <input type="text" class="login__input" name="user_name" placeholder="Username">
+                    </div>
+
+
+                    <div class="login__field">
+                        <input type="email" name="email" class="login__input" placeholder="Email">
+                    </div>
+                   
+                    <div class="login__field">
+                        <input type="password" name="password" class="login__input" placeholder="password">
+                    </div>
+                    <div class="login__field">
+                        <input type="password" name="confirmPass" class="login__input" placeholder="Confirm Password">
+                    </div>
+
+                    <div class="login__field">
+                        <input type="date" name ="birth_date"  class="login__input" placeholder="Birth Date">
+                    </div>
+                    <button  class="button login__submit">
+                        <span class="button__text">Register Now</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>				
+                </form>
+                <!-- <div class="social-login">
+                    <h3>log in via</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-login__icon fab fa-instagram"></a>
+                        <a href="#" class="social-login__icon fab fa-facebook"></a>
+                        <a href="#" class="social-login__icon fab fa-twitter"></a>
+                    </div>
+                </div> -->
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>		
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>		
+        </div>
+    </div>
+</body>
+{% include "footer.html" %}
