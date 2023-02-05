@@ -11,28 +11,43 @@ def category(request):
 
 def blog(request):
     return render(request, 'blog.html')
-
+def create_music(request):
+    return render(request, 'create_music.html')
+def create_playlist(request):
+    return render(request, 'create_playlist.html')
 def artist(request):
-    return render(request, 'artist.html')
+    artist = User.objects.get(id=id)
+    context = {
+        'artist': artist,
+    }
+    return render(request,context, 'artist.html')
 
 def playlist(request):
+    playlist = Playlist.objects.get(id=id)
+    context = {
+        'playlist': playlist,
+    }
     return render(request, 'playlist.html')
 
-
-def About(request):
-    return render(request, 'About.html')
-
-
-def contact(request):
-    return render(request, 'contact.html')
-
-
-def Login(request):
-    return render(request, 'Login.html')
-
-
-def registration(request):
-    return render(request, 'registration.html')
+def artists(request):
+    artistRole = Role.objects.get(id=2)
+    artists = User.objects.all(Role=artistRole)
+    context = {
+        'artists': artists,
+    }
+    return render(request,context, 'artists.html')
+def playlists(request):
+    playlists = Playlist.objects.all()
+    context = {
+        'playlists': playlists,
+    }
+    return render(request, 'playlists.html')
+def music(request):
+    music = Music.objects.get(id=id)
+    context = {
+        'music': music,
+    }
+    return render(request, 'music.html')
 
 def login(req):
     redirect('/login')
@@ -66,3 +81,33 @@ def register(req):
 def test(req):
     return render(req, 'test.html')
 
+def About(request):
+    return render(request, 'About.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
+
+
+def Login(request):
+    return render(request, 'Login.html')
+
+
+def registration(request):
+    return render(request, 'registration.html')
+
+
+
+def admin_login(request):
+    if 'user_id' in request.session:
+        Role = Role.objects.get(id=1)
+        user_id = request.session['user_id']
+        user = User.objects.get(id=user_id)
+        if user.role == Role:
+            return render(request, 'welcomeadmin.html')
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
+
+ 
