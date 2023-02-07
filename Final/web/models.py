@@ -1,5 +1,7 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 
+fs = FileSystemStorage(location='/media/photos')
 class Role(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
@@ -24,7 +26,7 @@ class User(models.Model):
     password = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name='users')
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to='images/', blank=True)
     birthdate = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

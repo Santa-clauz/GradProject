@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.landing_page, name='home'),
@@ -43,4 +44,4 @@ urlpatterns = [
     # path('admin/allAlbums', views.allAlbums, name='allAlbums'),
     # path('admin/allPlaylists', views.allPlaylists, name='allPlaylists'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from web.models import *
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 import bcrypt
 
@@ -67,16 +68,24 @@ def login(req):
         return redirect('/login')
 
 def register(req):
-    redirect('/register')
-    if 'user_id' in req.session:
-        return redirect('/')
+    clearify()
+    gender_id = req.POST['gender']
+    user_gender = Gender.objects.get(id = gender_id)
+    x = req.FILES.get('upload')
+    print(x)
+    testzz = req.FILES['upload']
     user = User.objects.create(
         username=req.POST['username'],
         password=bcrypt.hashpw(req.POST['password'].encode(), bcrypt.gensalt()).decode(),
         email=req.POST['email'],
-        first_name=req.POST['first_name'],
-        
+        address=req.POST['address'],
+        phone=req.POST['phone'],
+        role=Role.objects.get(id=3),
+        birthdate=req.POST['birthdate'],
+        gender = user_gender,
+        image = x
     )
+    return redirect('/')
 
 def test(req):
     return render(req, 'test.html')
@@ -110,4 +119,12 @@ def admin_login(request):
     else:
         return redirect('/')
 
- 
+
+def clearify():
+    if Role.objects.all().count() == 0:
+        Role.objects.create(name="Admin")
+        Role.objects.create(name="Artist")
+        Role.objects.create(name="User")
+        Gender.objects.create(name="Male")
+        Gender.objects.create(name="Female")
+        Gender.objects.create(name="Other")

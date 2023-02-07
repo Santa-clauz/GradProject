@@ -1,4 +1,5 @@
 {% include "header.html" %}
+
 <body>
     <div class="container" style="padding : 200px">
         <div class="screen">
@@ -6,26 +7,46 @@
             padding: 11px;
             ">
                 <h3 style="color: #6c63ac;">Register</h3>
-                <form class="registration" method="post">
+                <form method="post" enctype="multipart/form-data" action="register" class="register">
                     {% csrf_token %}
 
                     <div class="login__field">
-                        <input type="text" class="login__input" name="user_name" placeholder="Username">
+                        <input type="text" class="login__input" name="username" placeholder="Username">
                     </div>
                     <div class="login__field">
                         <input type="email" name="email" class="login__input" placeholder="Email">
                     </div>
-                   
+
                     <div class="login__field">
                         <input type="password" name="password" class="login__input" placeholder="password">
                     </div>
                     <div class="login__field">
-                        <input type="date" name ="birth_date"  class="login__input" placeholder="Birth Date">
+                        <input type="date" name="birthdate" class="login__input" placeholder="Birth Date">
                     </div>
-                    <button  class="button login__submit">
-                        <span class="button__text">Register Now</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
-                    </button>				
+                    <div class="login__field">
+                        <input type="text" name="phone" class="login__input" placeholder="Phone Number">
+                    </div>
+                    <div class="login__field">
+                        <input type="text" name="address" class="login__input" placeholder="Address">
+                    </div>
+                    <div class="login__field">
+                        <input type="radio" name="gender" value="1">
+                        <label for="male">Male</label><br>
+                        <input type="radio" name="gender" value="2">
+                        <label for="female">Female</label><br>
+                        <input type="radio" name="gender" value="4">
+                        <label for="other">Other</label>
+                    </div>
+                        <div class="login__field">
+                            <span class="btn btn-primary btn-file">
+                                <input type="file" name="upload">
+                            </span>
+                        </div>
+                        <br>
+                        <button class="button login__submit">
+                            <span class="button__text">Register Now</span>
+                            <i class="button__icon fas fa-chevron-right"></i>
+                        </button>
                 </form>
                 <!-- <div class="social-login">
                     <h3>log in via</h3>
@@ -38,10 +59,10 @@
             </div>
             <div class="screen__background">
                 <span class="screen__background__shape screen__background__shape4"></span>
-                <span class="screen__background__shape screen__background__shape3"></span>		
+                <span class="screen__background__shape screen__background__shape3"></span>
                 <span class="screen__background__shape screen__background__shape2"></span>
                 <span class="screen__background__shape screen__background__shape1"></span>
-            </div>		
+            </div>
         </div>
     </div>
 </body>
