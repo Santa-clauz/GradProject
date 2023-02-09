@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from web.models import *
 from django.shortcuts import render, redirect
 import bcrypt
+from django.core.paginator import Paginator
+
 
 def landing_page(request):
     return render(request, 'landing_page.html')
@@ -11,10 +13,19 @@ def category(request):
 
 def blog(request):
     return render(request, 'blog.html')
+
+
 def create_music(request):
     return render(request, 'create_music.html')
+
 def create_playlist(request):
     return render(request, 'create_playlist.html')
+
+
+def create_Event(request):
+    return render(request, 'create_event.html')
+
+
 def artist(request):
     artist = User.objects.get(id=id)
     context = {
@@ -22,26 +33,41 @@ def artist(request):
     }
     return render(request,context, 'artist.html')
 
+def artist(request):
+    # artist = User.objects.get(id=id)
+    # context = {
+    #     'artist': artist,
+    # }
+    return render(request, 'artist.html')
+
 def playlist(request):
-    playlist = Playlist.objects.get(id=id)
-    context = {
-        'playlist': playlist,
-    }
+    # playlist = Playlist.objects.get(id=id)
+    # context = {
+    #     'playlist': playlist,
+    # }
     return render(request, 'playlist.html')
 
 def artists(request):
-    artistRole = Role.objects.get(id=2)
-    artists = User.objects.all(Role=artistRole)
-    context = {
-        'artists': artists,
-    }
-    return render(request,context, 'artists.html')
+    # artistRole = Role.objects.get(id=2)
+    # artists = User.objects.all(Role=artistRole)
+    # context = {
+    #     'artists': artists,
+    # }
+    return render(request, 'artists.html')
+
 def playlists(request):
-    playlists = Playlist.objects.all()
-    context = {
-        'playlists': playlists,
-    }
-    return render(request, 'playlists.html')
+    # playlists = Playlist.objects.all()
+    # context = {
+    #     'playlists': playlists,
+    # }
+    # paginator = Paginator(playlists, 5)
+    # page = request.GET.get('page')
+    # posts = paginator.get_page(page)
+
+    # {'posts': posts}
+    return render(request, 'playlists.html',)
+
+
 def music(request):
     music = Music.objects.get(id=id)
     context = {

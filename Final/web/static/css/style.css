@@ -1813,3 +1813,8 @@ Responsive
 		margin-top: 20px;
 	}
 }
+
+article,aside, figcaption,footer,header,hgroup,main,nav section{
+	display: block;
+}
+
