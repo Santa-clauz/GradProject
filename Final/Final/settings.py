@@ -71,7 +71,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Final.wsgi.application'
 
 
-# Database
+# Database-
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
@@ -127,6 +127,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+# Base url to serve media files
 MEDIA_URL = '/media/'
-CORS_ORIGIN_ALLOW_ALL = True   
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CORS_ORIGIN_ALLOW_ALL = True
