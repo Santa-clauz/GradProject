@@ -119,6 +119,13 @@ def Login(request):
     return render(request, 'Login.html')
 
 
+def Show_events(request):
+    return render(request, 'show_events.html')
+
+def player(request):
+    return render(request, 'player.html')
+
+
 def registration(request):
     return render(request, 'registration.html')
 
