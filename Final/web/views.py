@@ -26,6 +26,9 @@ def create_playlist(request):
 def create_Event(request):
     return render(request, 'create_event.html')
 
+def request(request):
+    return render(request, 'request.html')
+
 
 def artist(request):
     artist = User.objects.get(id=id)
