@@ -155,7 +155,23 @@ def admin_login(request):
     else:
         return redirect('/')
 
+def addmusic(request):
+    return render(request, 'addmusic.html')
 
+def addmusicevent(request):
+    if 'user_id' in request.session:
+        Role = Role.objects.get(id=1)
+        user_id = request.session['user_id']
+        user = User.objects.get(id=user_id)
+        if user.role == Role:
+            return render(request, 'addmusicevent.html')
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
+def allmusic(request):
+    music = Music.objects.all()
+    print(music)
 def clearify():
     if Role.objects.all().count() == 0:
         Role.objects.create(name="Admin")
