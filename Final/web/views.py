@@ -1,9 +1,12 @@
-from django.http import HttpResponse
 from web.models import *
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 import bcrypt
-from django.core.paginator import Paginator
+from django.shortcuts import redirect, render
+from . import models
+from django.contrib import messages
+import bcrypt
+from time import strftime
+
 
 
 def landing_page(request):
@@ -79,10 +82,42 @@ def music(request):
     }
     return render(request, 'music.html')
 
-def login(req):
+def login(request):
+    print("login l7al222")
+    return render(request,'login.html')
+
+def Login(request):
+    print("login l7al")
+    return render(request, 'Login.html')
+
+# def loginP(request):
+#     print("helloooooooooooooooooooooooooooooo")
+#     redirect('/LoginT')
+#     email = request.POST['Email']
+#     password = request.POST['password']
+#     print(email,password)
+#     errors = models.login_user(email , password)
+    
+#     if len(errors)>0:
+#         for key,value in errors.items():
+#             messages.error(request,value)
+#         return redirect('/LoginT')
+
+#     user = models.get_this_user_by_email(request.POST['email'])
+#     if 'LoginT' not in request.session: #if user already logged in before
+#         request.session['Name'] = user[0].username
+#         request.session['email'] = user[0].email
+#         request.session['phone']=user[0].phone
+#         request.session['id'] = user[0].id
+#         print(request.session['Name'])
+#         return redirect('/home')
+#     else:
+#         return redirect('/LoginT')
+
+def loginP(req):
     redirect('/login')
     req.session.clear()
-    user = User.objects.filter(username=req.POST['username'])
+    user = User.objects.filter(username=req.POST['Email'])
     password=req.POST['password']
     if user:
         logged_user = user[0].id
@@ -105,12 +140,14 @@ def register(req):
     testzz = req.FILES['upload']
     user = User.objects.create(
         username=req.POST['username'],
-        password=bcrypt.hashpw(req.POST['password'].encode(), bcrypt.gensalt()).decode(),
         email=req.POST['email'],
-        address=req.POST['address'],
-        phone=req.POST['phone'],
-        role=Role.objects.get(id=3),
+        password=bcrypt.hashpw(req.POST['password'].encode(), bcrypt.gensalt()).decode(),
         birthdate=req.POST['birthdate'],
+        phone=req.POST['phone'],
+        address=req.POST['address'],
+       
+        role=Role.objects.get(id=3),
+      
         gender = user_gender,
         image = x
     )
@@ -127,8 +164,7 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-def Login(request):
-    return render(request, 'Login.html')
+
 
 
 def Show_events(request):
@@ -141,6 +177,8 @@ def player(request):
 def registration(request):
     return render(request, 'registration.html')
 
+def new(request):
+    return render(request, 'Newest.html')
 
 
 def admin_login(request):
