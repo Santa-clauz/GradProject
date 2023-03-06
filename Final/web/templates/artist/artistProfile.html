@@ -1,0 +1,64 @@
+{% include "header.html" %}
+
+<body>
+
+	<section class="player-section set-bg" data-setbg="img/player-bg.jpg"
+		style="background-image: url(&quot;img/player-bg.jpg&quot;); padding:0px;">
+		<div class="player-box">
+			<div class="tarck-thumb-warp" style="display:flex; flex-direction: column; align-items: center;">
+				<div class="tarck-thumb">
+					{% if artist.image.url != "/media/default.png" %}
+					<img src="{{artist.image.url}}" alt="">
+					{% else %}
+					<img src="/static/img/wave-thumb.jpg" alt="">
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="wave-player-warp">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="wave-player-info">
+							<h2> {{artist.username}}</h2>
+							<br>
+							<br>
+							<a class="btn btn-primary" href="/events/{{artist.id}}" role="button">Events</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<section class="songs-section">
+		<div class="container">
+			<h2 style="margin: 20px; ">Songs</h2>
+
+			<!-- song -->
+			<div class="song-item">
+				<div class="row">
+					{% for i in music%}
+					<div style="padding-top: 5px"class="col-lg-12">
+						<div class="song-info-box">
+							<a href="/music/{{i.id}}"><img src="/static/img/songs/1.jpg" alt=""></a>
+							<div class="song-info">
+								<h4 style="width:100% !important">{{i.name}}</h4>
+								<p>{{i.description}}</p>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+
+
+	{% include "footer.html" %}
+
+</body>

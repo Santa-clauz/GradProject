@@ -1,0 +1,96 @@
+{% include "header.html" %}
+
+
+<!-- Header section -->
+
+<!-- Header section end -->
+
+<body style="background-color: white !important;">
+    <meta charset="UTF-8">
+    <meta name="description" content="SolMusic HTML Template">
+    <meta name="keywords" content="music, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/a3e915a0e4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://kit.fontawesome.com/a3e915a0e4.css" crossorigin="anonymous">
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.png' %}" rel="shortcut icon" />
+
+    <!-- Google font -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'js/player.js' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/login.css' %}"/> -->
+
+    <!-- Main Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/player.css' %}" />
+    <div>
+        <audio controls style="visibility:visible !important">
+            <source src="/media/music/{{i.music}}" type="audio/mp3">
+            
+        </audio>
+        <article class="screen">
+            <input type="checkbox" value="None" id="magicButton" name="check" />
+            <label class="main" for="magicButton"></label>
+
+            <div class="coverImage"></div>
+            <div class="bodyPlayer"></div>
+
+            <table class="list">
+                {% for i in all %}
+
+                <tr class="song">
+                    <td class="nr">
+                        <h5>{{forloop.counter0}}<h5>
+                    </td>
+                    <td class="title">
+                        <h6><a href="/music/{{i.id}}">{{i.name}}</a>
+                            <h6>
+                    </td>
+                    <td><input type="checkbox" id="heart" /><label class="zmr" for="heart"></label></td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+            <div class="shadow"></div>
+
+            <div class="bar"></div>
+
+            <div class="info2">
+                <h2>{{i.name}}</h2>
+                <br>
+                <h3>{{i.uploaded_by.username}}</h3>
+            </div>
+
+            <audio controls style="visibility:visible !important">
+                <source src="/media/music/{{i.music}}" type="audio/mp3">
+                
+            </audio>
+           
+
+            <table class="footer">
+                <td><input type="checkbox" id="love" checked /><label class="love" for="love"></label></td>
+            </table>
+
+            <div class="current">
+                <h2>{{i.name}}</h2>
+            </div>
+            
+        </article>
+    </div>
+
+
+    {% include "footer.html" %}
+</body>

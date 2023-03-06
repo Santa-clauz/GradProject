@@ -21,6 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-_8k9p&%%v1y7h%yw$+(y*a8d$%s1@*_e5dz_j5u9j1mm_cy)27'
+STRIPE_PUBLIC_KEY = "pk_test_51MhS48J8z5shRJVzS2Kda79t2zUUZ8z6sreGTMnOKW9r38UvaB2kYfS7sQYIUOOTWndCMEW1mGKS3GueEYrSXem8002dYmDv4l"
+STRIPE_SECRET_KEY = "sk_test_51MhS48J8z5shRJVzZx8ldVPJmW6rGxwfo28phBua3GXo4xttvL0ZSpPu3PwpVDS2u0LVKKSQ2sjwdDVvB8kDI7kN002LwOibZt"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -137,3 +139,5 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ORIGIN_ALLOW_ALL = True
+STRIPE_SECRET_KEY = 'sk_test_51MhS48J8z5shRJVzZx8ldVPJmW6rGxwfo28phBua3GXo4xttvL0ZSpPu3PwpVDS2u0LVKKSQ2sjwdDVvB8kDI7kN002LwOibZt'
+STRIPE_PUBLIC_KEY = 'pk_test_51MhS48J8z5shRJVzS2Kda79t2zUUZ8z6sreGTMnOKW9r38UvaB2kYfS7sQYIUOOTWndCMEW1mGKS3GueEYrSXem8002dYmDv4l'

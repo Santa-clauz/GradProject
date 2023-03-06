@@ -1,9 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-	<title>ListenTo</title>
-	<meta charset="UTF-8">
+{% include "header.html" %}
+<meta charset="UTF-8">
 	<meta name="description" content="SolMusic HTML Template">
 	<meta name="keywords" content="music, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,39 +39,6 @@
             max: new Date(2015,7,14)
           })
      </script>
-	
-
-</head>
-
-<!-- Header section -->
-<header class="header-section clearfix">
-	<a href="/" class="site-logo">
-		<img src="{% static 'img/logo.png' %}" height="100px" alt="">
-	</a>
-	<div class="header-right">
-		<a href="/" class="hr-btn">Welcome</a>
-		<span>|</span>
-		<div class="user-panel">
-			<a href="LoginT" class="login">Login</a>
-			<a href="registration" class="register">Create an account</a>
-		</div> 
-	</div>
-	<ul class="main-menu">
-		<li><a href="/">Home</a></li>
-		<li><a href="About">About</a></li>
-		<li><a href="#">Pages</a>
-			<ul class="sub-menu">
-				<li><a href="category">Category</a></li>
-				<li><a href="playlists">Playlist</a></li>
-				<li><a href="artists">Artist</a></li>
-				<li><a href="blog">Blog</a></li>
-				<li><a href="contact">Contact</a></li>
-			</ul>
-		</li>
-		
-		<li><a href="contact">Contact</a></li>
-	</ul>
-</header>
 <!-- Header section end -->
 {% load static %}
 <body>
@@ -85,9 +49,10 @@
 
     <section class="get-in-touch">
        <h1 class="title">Create an Event !!</h1>
-       <form class="contact-form row" >
+       <form method="post" enctype="multipart/form-data" action="eventadd" class="contact-form row">
+         {% csrf_token %}
           <div class="form-field col-lg-6">
-             <input id="name" class="input-text js-input" type="text" required>
+             <input name = "name" id="name" class="input-text js-input" type="text" required>
              <label class="label" for="name">Event Name</label>
           </div>
           
@@ -100,22 +65,26 @@
 
           </div>
           <div class="form-field col-lg-6 ">
-             <input id="company" class="input-text js-input" type="text" required>
-             <label class="label" for="company">Company Name</label>
+             <input name="description" id="description" class="input-text js-input" type="text" required>
+             <label class="label" for="description">description</label>
           </div>
            <div class="form-field col-lg-6 ">
-             <input id="phone" class="input-text js-input" type="text" required>
-             <label class="label" for="phone">ticket price</label>
+             <input name = "price" id="price" class="input-text js-input" type="number" required>
+             <label class="label" for="price">ticket price</label>
           </div>
           <div class="form-field col-lg-12">
-             <input id="message" class="input-text js-input" type="text" required>
-             <label class="label" for="message">stage Name</label>
-          </div>
-          
-          <div class="form-field col-lg-12">
-            <input id="message" class="input-text js-input" type="text" required>
+            <input name="location" id="location" class="input-text js-input" type="text" required>
             <label class="label" for="message">stage Location</label>
          </div>
+         <div class="form-field col-lg-12">
+            <input name="capacity" id="capacity" class="input-text js-input" type="number" required>
+            <label class="label" for="capacity">Event Capacity</label>
+         </div>
+         <div class="login__field">
+            <span class="btn btn-primary btn-file">
+                <input type="file" name="image">
+            </span>
+        </div>
           <div class="form-field col-lg-12">
              <input class="submit-btn" type="submit" value="Submit">
           </div>

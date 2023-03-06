@@ -22,9 +22,9 @@ class Category(models.Model):
         return self.name
 
 class User(models.Model):
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=128)
     password = models.CharField(max_length=512)
-    email = models.CharField(max_length=50)
+    email = models.CharField(max_length=128)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name='users')
     image = models.ImageField(upload_to='images/', blank=True)
     birthdate = models.DateField()
@@ -92,7 +92,6 @@ class Album(models.Model):
 class Event(models.Model):
     name=models.CharField(max_length=45)
     date=models.DateField()
-    time=models.TimeField()
     image = models.ImageField(upload_to='images/',default='pic.png')
     location=models.CharField(max_length=45)
     creator=models.ForeignKey(User,related_name="events",on_delete=models.CASCADE)
@@ -100,10 +99,10 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     attendees=models.ManyToManyField(User,related_name="attending")
-
+    capacity=models.IntegerField()
+    price=models.IntegerField()
 class Ticket(models.Model):
     event=models.ForeignKey(Event,related_name="tickets",on_delete=models.CASCADE)
-    user=models.ForeignKey(User,related_name="tickets",on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     price=models.IntegerField()
