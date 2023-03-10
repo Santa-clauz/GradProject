@@ -2,26 +2,6 @@
 
 <body>
 	<style>
-		a {
-			text-decoration: none;
-			display: inline-block;
-			padding: 8px 16px;
-		}
-
-
-		.previous {
-			background-color: #f1f1f1;
-			color: black;
-		}
-
-		.next {
-			background-color: blue;
-			color: white;
-		}
-
-		.round {
-			border-radius: 50%;
-		}
 		.input-group{
 			width: fit-content;
 		}
@@ -43,19 +23,23 @@
 					<h2>All Events</h2>
 					<div class="input-group">
 						<div class="form-outline">
-							<input type="search" id="form1" class="form-control" />
-							<label class="form-label" for="form1">Search by Event name</label>
+							<form action="searchEvent" method="post" style="display: flex;">
+								{% csrf_token %}
+	
+								<input type="search" id="form1" class="form-control" name="event" />
+								<button class="btn btn-primary">
+									<i class="fas fa-search"></i>
+								</button>
+							</form>
 						</div>
-						<button type="button" class="btn btn-primary">
-							<i class="fas fa-search"></i>
-						</button>
+
 					</div>
 				</div>
 				<div class="category-items">
 					<div class="row">
 
 						{% for i in all%}
-						<div style="padding-top: 5% ;" class="col-md-4">
+						<div style="padding-top: 5 ; padding-bottom : 15px ;" class="col-md-4">
 							<div class="category-item">
 								{% if i.image.url != "/media/default.png" %}
 								<a href="/event/{{i.id}}"><img
@@ -79,6 +63,9 @@
 					</div>
 				</div>
 			</div>
+			<br>
+			<br>
+			<br>
 			<div style=" justify-content: center;">
 				{% if all.has_previous %}
 				<a class="previous" href="/Events?page=+{{all.previous_page_number}}">Previous Page</a>

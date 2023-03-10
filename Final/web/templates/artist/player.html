@@ -35,10 +35,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/player.css' %}" />
     <div>
-        <audio controls style="visibility:visible !important">
-            <source src="/media/music/{{i.music}}" type="audio/mp3">
-            
-        </audio>
+
         <article class="screen">
             <input type="checkbox" value="None" id="magicButton" name="check" />
             <label class="main" for="magicButton"></label>
@@ -57,7 +54,7 @@
                         <h6><a href="/music/{{i.id}}">{{i.name}}</a>
                             <h6>
                     </td>
-                    <td><input type="checkbox" id="heart" /><label class="zmr" for="heart"></label></td>
+                    
                 </tr>
 
                 {% endfor %}
@@ -66,22 +63,27 @@
 
             <div class="shadow"></div>
 
-            <div class="bar"></div>
+            <div class="bar"><audio controls style="visibility:visible !important">
+                <source src="/media/music/{{i.music}}" type="audio/mp3">
+                
+            </audio> <br><br> </div>
 
-            <div class="info2">
+            <div style="padding-top: 20px;" class="info2">
                 <h2>{{i.name}}</h2>
                 <br>
                 <h3>{{i.uploaded_by.username}}</h3>
             </div>
 
-            <audio controls style="visibility:visible !important">
-                <source src="/media/music/{{i.music}}" type="audio/mp3">
-                
-            </audio>
+            
            
 
             <table class="footer">
-                <td><input type="checkbox" id="love" checked /><label class="love" for="love"></label></td>
+               
+                {% if liked %}
+                <td><a href="/dislike/{{i.id}}">Dislike Song</a></td>
+                {% else %}
+                <td><a href="/like/{{i.id}}"> like Song</a> </td>
+                {% endif %}
             </table>
 
             <div class="current">

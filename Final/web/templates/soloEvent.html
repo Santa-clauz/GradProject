@@ -23,28 +23,26 @@
 					<div class="col-lg-12">
 						<div class="wave-player-info">
 							<h2> {{event.name}}</h3>
-                            <br>
-                            <h2>{{event.date}}</h3>
-                            <br>
-                            <h2>Price : {{event.price}} Nis</h2>
-                            <br>
-                            <h2>Location : {{event.location}}</h2>
-                            <br>
-                            
-                            <form action="/buy/{{event.id}}" method="POST">
-								{% csrf_token %}
-								<script
-									src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-									data-key="pk_test_51MhS48J8z5shRJVzS2Kda79t2zUUZ8z6sreGTMnOKW9r38UvaB2kYfS7sQYIUOOTWndCMEW1mGKS3GueEYrSXem8002dYmDv4l"
-									data-amount="1000"
-									data-name="Example"
-									data-description="Example charge"
-									data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-									data-currency="usd"
-									data-locale="auto">
-								</script>
-							  </form>
-							  
+								<br>
+								<h2>{{event.date}}</h3>
+									<br>
+									<h2>Price : {{event.price}} Nis</h2>
+									<br>
+									<h2>Location : {{event.location}}</h2>
+									<br>
+									{% if isbought %}
+									<h2 style = "color : cyan">You already bought a ticket</h2>
+									{% else %}
+									<form action="/buy/{{event.id}}" method="POST">
+										{% csrf_token %}
+										<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+											data-key="pk_test_51MhS48J8z5shRJVzS2Kda79t2zUUZ8z6sreGTMnOKW9r38UvaB2kYfS7sQYIUOOTWndCMEW1mGKS3GueEYrSXem8002dYmDv4l"
+											data-amount="{{event.price}}" data-name="Example" data-description="Example charge"
+											data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+											data-currency="usd" data-locale="auto">
+											</script>
+									</form>
+									{% endif %}
 						</div>
 					</div>
 

@@ -1,0 +1,30 @@
+why did we use the min max:
+if we are doing machine learning in other context for example looking for patterns
+but here we will get data in future in that are not the same as the data we have now ,
+and this because when want the reclustering with the same scaler ,
+values are derived from another software that give values in certain range
+so the min max , made much more sense , and we tried to scale the data in other models ,
+and the skewniss kind is not bad , and it was just on the chroma_cens , we are aware the data
+is skewed thats why we used min max ; 
+and it means that all the data are the same and our data doesnt cover all the possiblities ,
+so we chose the minmax instead of standard scaler , because we are preparing this model to be able to work with future data , so we are anticpating for antoher kind of data that would have diverse values on chroma _ cens or that skewing we were facing  .
+
+
+
+
+
+
+clustering is good and interesting , the way it recommend stuff , and its not classification only ,
+and you need lables , its beyond that , 
+
+
+its speicail because we are recommending base on the song it self , and not about anything else,
+we tried many models hierical clustering and dbscan but we had no good results .
+
+why kmeans ; we used kmeans because it is the best model that converge well , and it gave clusters that are well distrubuted , and the songs in the same cluster are actually the same in one way or another , this means that the problem we are trying to solve is not complicated and easy (mathmaticaly and statsitcally easy ) , and going for complex models was not benifcial(over engineering ).
+
+
+
+cos(sine similarity )  xyzkasdf for each point
+than we measure the distance for these points
+and take the best distances 

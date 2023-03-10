@@ -5,20 +5,21 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Handle</th>
+        <th scope="col">name</th>
+        <th scope="col">price</th>
+        <th scope="col">location</th>
+
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
     {% for i in all %}
       <tr>
-        <th scope="row">{{i.user.id}}</th>
-        <td>{{i.username}}</td>
-        <td>{{i.email}}</td>
-        <td>{{i.phone}}</td>
-        <td><a href="acceptartist/{{i.id}}" type="button" class="btn btn-primary">Accept</a> <a  href="declineartist/{{i.id}}"type="button" class="btn btn-danger">decline</a></td>
+        <th>{{forloop.counter0}}</th>
+        <th scope="row">{{i.name}}</th>
+        <td>{{i.price}}</td>
+        <td>{{i.location}}</td>
+        <td><a href="acceptartist/{{i.id}}" type="button" class="btn btn-primary">Edit</a> <a  href="declineartist/{{i.id}}"type="button" class="btn btn-danger">Delete</a></td>
         
       </tr>
     {%endfor%}

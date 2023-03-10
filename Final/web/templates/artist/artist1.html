@@ -1,31 +1,11 @@
 {% include "header.html" %}
+<style>
+	.input-group {
+		width: fit-content;
+	}
+</style>
 
 <body>
-	<style>
-		a {
-			text-decoration: none;
-			display: inline-block;
-			padding: 8px 16px;
-		}
-
-
-		.previous {
-			background-color: #f1f1f1;
-			color: black;
-		}
-
-		.next {
-			background-color: blue;
-			color: white;
-		}
-
-		.round {
-			border-radius: 50%;
-		}
-		.input-group{
-			width: fit-content;
-		}
-	</style>
 	{% load static %}
 
 	<!-- Page Preloder -->
@@ -43,13 +23,15 @@
 					<h2>All artists</h2>
 					<div class="input-group">
 						<div class="form-outline">
-							
-							<input type="search" id="form1" class="form-control" />
-							<label class="form-label" for="form1">Search by artist name</label>
+							<form action="searchArtist" method="post" style="display: flex;">
+								{% csrf_token %}
+
+								<input type="search" id="form1" class="form-control" name="artist" />
+								<button class="btn btn-primary">
+									<i class="fas fa-search"></i>
+								</button>
+							</form>
 						</div>
-						<button type="button" class="btn btn-primary">
-							<i class="fas fa-search"></i>
-						</button>
 					</div>
 				</div>
 				<div class="category-items">
@@ -59,10 +41,15 @@
 						<div style="padding-top: 5%;" class="col-md-4">
 							<div class="category-item">
 								{% if i.image.url != "/media/default.png" %}
+								{% if "https"  in i.image.url %}
 								<a href="/artist/{{i.id}}"><img
 										style="height : 275px !important; width : 400px !important"
-										href="aritst/{{i.id}}" src="{{i.image.url}}"
-										alt="{%static 'img/playlist/9.jpg' %}"></a>
+										href="aritst/{{i.id}}" src="{{i.image}}" alt="fuck"></a>
+								{%else%}
+								<a href="/artist/{{i.id}}"><img
+										style="height : 275px !important; width : 400px !important"
+										href="aritst/{{i.id}}" src="{{i.image.url}}" alt="{{i.image}}"></a>
+								{% endif %}
 								{% else %}
 								<a href="/artist/{{i.id}}"><img
 										style="height : 275px !important; width : 400px !important"
@@ -84,6 +71,7 @@
 				{% if all.has_previous %}
 				<a class="previous" href="/Artists?page=+{{all.previous_page_number}}">Previous Page</a>
 				{% endif %}
+
 				{% if all.has_next %}
 				<a class="next" href="/Artists?page={{all.next_page_number}}"> Next Page</a>
 				{% endif %}

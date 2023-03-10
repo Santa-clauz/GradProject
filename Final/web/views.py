@@ -1,3 +1,4 @@
+import os
 import requests
 import numpy as np
 import pandas as pd
@@ -133,14 +134,28 @@ def recommendMusic(id):
     ids = rankingDf['id'].tolist()
     random.shuffle(ids)
     recommendations = Music.objects.filter(id__in=ids[:15])
-    lastset = {}
+    lastset = set()
     for i in recommendations:
-        lastset.push(i)
+        lastset.add(i)
     return lastset
+
 
 def landing_page(request):
     return render(request, 'landing_page.html')
 
+def like(request, id):
+    user = User.objects.get(id=request.session['user_id'])
+    music = Music.objects.get(id=id)
+    user.liked_musics.add(music)
+    user.save()
+    return redirect('/music/'+str(id))
+
+def dislike(request, id):
+    user = User.objects.get(id=request.session['user_id'])
+    music = Music.objects.get(id=id)
+    user.liked_musics.remove(music)
+    user.save()
+    return redirect('/music/'+str(id))
 
 def artists(request):
     artists = User.objects.filter(role=2)
@@ -148,6 +163,25 @@ def artists(request):
     page_num = request.GET.get('page', 1)
     page = p.page(page_num)
     print(page)
+    k  = 1
+    for i in artists:
+        k-=1
+        if k == 0:
+            break
+        if i.image == 'default.png':
+            response = requests.get('https://api.unsplash.com/photos/random', params={
+                'query': 'singer',
+                'client_id': "ohkT-pB9GjhXewBQSTA6qTpDynAiT9XlTusK3StPjxg"
+            })
+            print(response)
+            if response.status_code == 200:
+                data = response.json()
+                image_url = data['urls']['regular']
+                i.image = image_url
+                i.save()
+            else:
+                print('error')
+
     context = {
         'all': page,
     }
@@ -190,7 +224,7 @@ def create_Event(request):
 
 def Events(request):
     events = Event.objects.all()
-    p = Paginator(events, 3)
+    p = Paginator(events, 6)
     page_num = request.GET.get('page', 1)
     page = p.page(page_num)
     print(page)
@@ -219,7 +253,7 @@ def adminallmusic(request):
         return redirect('/')
     else:
         if request.session['user_role'] == 1:
-            musics = Music.objects.all()
+            musics = Music.objects.all()[:50]
             context = {
                 'all': musics,
             }
@@ -278,38 +312,47 @@ def music(request, id):
     music = Music.objects.get(id=id)
     k = music.name.split("(")
     music.name = k[0]
-    recommendMusic(id)
+    x = recommendMusic(id)
     all = Music.objects.filter(uploaded_by=music.uploaded_by)[0:6]
     for i in all:
         g = i.name.split("(")
         i.name = g[0]
+    for i in all:
+        x.add(i)
+    mylist = list(x)
+    random.shuffle(mylist)
+    user = User.objects.get(id=request.session['user_id'])
+    liked = False
+    if music in user.liked_musics.all():
+        liked = True
+    
+    print(user)
     context = {
         'i': music,
-        'all': all,
+        'all': mylist[:8],
+        'liked': liked,
     }
     return render(request, 'artist/player.html', context)
-
-
-def login(request):
-    print("login l7al222")
-    return render(request, 'login.html')
 
 
 def Login(request):
     print("login l7al")
     return render(request, 'Login.html')
+
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def buy(request,id):
+def buy(request, id):
     event = Event.objects.get(id=id)
+    user = User.objects.get(id=request.session['user_id'])
     ticket = Ticket.objects.create(
         event=event,
-        user=request.user,
+        user=user,
         price=event.price,
     )
     ticket.save()
-    
+
     if request.method == 'POST':
         # Get the token from the form data
         token = request.POST.get('stripeToken')
@@ -395,10 +438,6 @@ def declineartist(request, id):
     return redirect('/admin')
 
 
-def test(req):
-    return render(req, 'test.html')
-
-
 def About(request):
     return render(request, 'About.html')
 
@@ -412,20 +451,8 @@ def logout(request):
     return redirect('/')
 
 
-def Show_events(request):
-    return render(request, 'show_events.html')
-
-
-def player(request):
-    return render(request, 'player.html')
-
-
 def registration(request):
     return render(request, 'registration.html')
-
-
-def new(request):
-    return render(request, 'Newest.html')
 
 
 def admin_login(request):
@@ -515,11 +542,30 @@ def allmusic(request):
 def event(request, id):
     event = Event.objects.get(id=id)
     soldtickets = Ticket.objects.filter(event=event).count()
+    user = User.objects.get(id=request.session['user_id'])
+    ifbought = Ticket.objects.filter(event=event.id, user=user.id)
     context = {
         'event': event,
-        'soldtickets': soldtickets
+        'soldtickets': soldtickets,
+        'isbought': ifbought,
     }
     return render(request, 'soloEvent.html', context)
+
+
+def searchArtist(request):
+    artist = User.objects.filter(username=request.POST['artist'])
+    if artist:
+        return redirect("/artist/"+str(artist[0].id))
+    else:
+        return redirect("/")
+
+
+def searchEvent(request):
+    event = Event.objects.filter(name=request.POST['event'])
+    if event:
+        return redirect("/event/"+str(event[0].id))
+    else:
+        return redirect("/")
 
 
 def clearify():

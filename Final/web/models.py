@@ -34,7 +34,8 @@ class User(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name='users')
     phone = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
-
+    liked_musics = models.ManyToManyField('Music', related_name='liked_users')
+    
 class Music(models.Model):
     name = models.CharField(max_length=255)
     duration = models.CharField(max_length=50) 
@@ -106,3 +107,4 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     price=models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets')
